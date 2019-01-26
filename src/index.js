@@ -5,20 +5,11 @@ if (NodeList.prototype.forEach === undefined) {
 }
 
 class LazyUrl {
-    constructor() {
-        this.observer = new IntersectionObserver(function (entries) {
-            entries.forEach(entry => {
-                let element = entry.target;
-                if (entry.intersectionRatio > 0 && element.getAttribute('src') === null) {
-                    element.setAttribute('src', element.getAttribute('lazy-url'));
-                    element.removeAttribute('lazy-url');
-                    this.unobserve(element);
-                }
-                if (entry.intersectionRatio > 0 && element.getAttribute('src') !== null) {
-                    element.removeAttribute('lazy-url');
-                    this.unobserve(element);
-                }
-            })
+    constructor(attibuteNameImg, attibuteNameColor) {
+        this.attibuteNameImg = typeof(attibuteNameImg) === 'string' ? attibuteNameImg:'lazy-url';
+        this.attibuteNameColor = typeof(attibuteNameColor) === 'string' ? attibuteNameColor:'lazy-color';
+        this.observer = new IntersectionObserver((entries) => {
+            this.intersectionEvent(entries)
         }, {
             threshold: [0.01]
         });
@@ -29,14 +20,30 @@ class LazyUrl {
             subtree: true,
             childList: true
         });
+        console.log(this.attibuteNameImg);
         this.start();
+    }
+
+    intersectionEvent(entries) {
+        entries.forEach(entry => {
+            let element = entry.target;
+            if (entry.intersectionRatio > 0 && element.getAttribute('src') === null) {
+                element.setAttribute('src', element.getAttribute(this.attibuteNameImg));
+                element.removeAttribute(this.attibuteNameImg);
+                this.observer.unobserve(element);
+            }
+            if (entry.intersectionRatio > 0 && element.getAttribute('src') !== null) {
+                element.removeAttribute(this.attibuteNameImg);
+                this.observer.unobserve(element);
+            }
+        })
     }
 
     domChanges(domChanges) {
         let that = this;
         domChanges.forEach(function (mutation) {
             mutation.addedNodes.forEach(element => {
-                if (element.nodeType === 1 && element.getAttribute('lazy-url')) {
+                if (element.nodeType === 1 && element.getAttribute(that.attibuteNameImg)) {
                     that.start();
                 }
             })
@@ -45,15 +52,14 @@ class LazyUrl {
 
     start() {
         this.observer.disconnect();
-        document.querySelectorAll('[lazy-url]').forEach((el) => {
+        document.querySelectorAll(`[${this.attibuteNameImg}]`).forEach((el) => {
             if (typeof (el.getAttribute('src')) !== 'string') {
-                if (el.getAttribute('lazy-color')) {
-                    el.style.backgroundColor = el.getAttribute('lazy-color');
+                if (el.getAttribute(this.attibuteNameColor)) {
+                    el.style.backgroundColor = el.getAttribute(this.attibuteNameColor);
                 }
                 this.observer.observe(el);
             }
         });
-        console.log('coucou !!!');
     }
 
     stop() {
