@@ -29,6 +29,7 @@ class LazyUrl {
             subtree: true,
             childList: true
         });
+        this.start();
     }
 
     domChanges(domChanges) {
@@ -52,7 +53,7 @@ class LazyUrl {
                 this.observer.observe(el);
             }
         });
-        console.log('coucou');
+        console.log('coucou !!!');
     }
 
     stop() {
