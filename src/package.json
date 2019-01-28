@@ -1,0 +1,23 @@
+{
+  "name": "lazy-url-loader",
+  "version": "1.0.0",
+  "description": "a tiny lazy loader for img and background",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cyrilpointet/lazy-url-loader.git"
+  },
+  "keywords": [
+    "lazy",
+    "loading"
+  ],
+  "author": "Cyril Pointet <pointet.cyril@gmail.com> (http://cyrilpointet.com/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cyrilpointet/lazy-url-loader/issues"
+  },
+  "homepage": "https://github.com/cyrilpointet/lazy-url-loader#readme"
+}
