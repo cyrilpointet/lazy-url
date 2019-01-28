@@ -11,8 +11,7 @@
     "url": "git+https://github.com/cyrilpointet/lazy-url-loader.git"
   },
   "keywords": [
-    "lazy",
-    "loading"
+    "lazy-loading"
   ],
   "author": "Cyril Pointet <pointet.cyril@gmail.com> (http://cyrilpointet.com/)",
   "license": "ISC",
