@@ -1,10 +1,11 @@
+
 require('intersection-observer');
 
 if (NodeList.prototype.forEach === undefined) {
     NodeList.prototype.forEach = Array.prototype.forEach;
 }
 
-class LazyUrl {
+export default class {
     constructor(options = {}) {
         this.attibuteNameSrc = options.attibuteNameSrc && typeof(options.attibuteNameSrc) === 'string' ? options.attibuteNameSrc : 'lazy-url';
         this.attibuteNameBGImage = options.attibuteNameBGImage && typeof(options.attibuteNameBGImage) === 'string' ? options.attibuteNameBGImage : 'lazy-background';
@@ -105,4 +106,3 @@ class LazyUrl {
     }
 }
 
-lazyUrl = new LazyUrl();
