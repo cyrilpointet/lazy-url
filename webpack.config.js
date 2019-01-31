@@ -1,4 +1,10 @@
 module.exports = {
+    entry: {
+        main: [
+            '@babel/polyfill',
+            './src/index.js',
+        ]
+    },
     module: {
         rules: [
             {
@@ -9,6 +15,5 @@ module.exports = {
                 }
             }
         ]
-    },
-    devtool: "inline-source-map"
+    }
 };

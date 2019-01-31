@@ -1,11 +1,6 @@
-
 require('intersection-observer');
 
-if (NodeList.prototype.forEach === undefined) {
-    NodeList.prototype.forEach = Array.prototype.forEach;
-}
-
-export default class {
+class Toto {
     constructor(options = {}) {
         this.attibuteNameSrc = options.attibuteNameSrc && typeof(options.attibuteNameSrc) === 'string' ? options.attibuteNameSrc : 'lazy-url';
         this.attibuteNameBGImage = options.attibuteNameBGImage && typeof(options.attibuteNameBGImage) === 'string' ? options.attibuteNameBGImage : 'lazy-background';
@@ -34,7 +29,7 @@ export default class {
     }
 
     intersectionEventSrc(entries) {
-        entries.forEach(entry => {
+        [...entries].forEach(entry => {
             let element = entry.target;
             if (entry.intersectionRatio > 0 && element.getAttribute(this.attibuteNameSrc) !== null && element.getAttribute('src') === null) {
                 element.setAttribute('src', element.getAttribute(this.attibuteNameSrc));
@@ -49,7 +44,7 @@ export default class {
     }
 
     intersectionEventBGImage(entries) {
-        entries.forEach(entry => {
+        [...entries].forEach(entry => {
             let element = entry.target;
             if (entry.intersectionRatio > 0 && element.getAttribute(this.attibuteNameBGImage) !== null) {
                 element.style.backgroundImage = 'url(' + element.getAttribute(this.attibuteNameBGImage) + ')';
@@ -65,8 +60,8 @@ export default class {
 
     domChanges(domChanges) {
         let that = this;
-        domChanges.forEach(function (mutation) {
-            mutation.addedNodes.forEach(element => {
+        [...domChanges].forEach(function (mutation) {
+            [...mutation.addedNodes].forEach(element => {
                 if (element.nodeType === 1 && (element.getAttribute(that.attibuteNameSrc) || element.getAttribute(that.attibuteNameBGImage))) {
                     that.start();
                 }
@@ -77,7 +72,7 @@ export default class {
     start() {
         this.observerSrc.disconnect();
         this.observerBGImage.disconnect();
-        document.querySelectorAll(`[${this.attibuteNameSrc}]`).forEach((el) => {
+        [...document.querySelectorAll(`[${this.attibuteNameSrc}]`)].forEach((el) => {
             if (typeof (el.getAttribute('src')) !== 'string') {
                 if (el.getAttribute(this.attibuteNameColor)) {
                     el.style.backgroundColor = el.getAttribute(this.attibuteNameColor);
@@ -86,7 +81,7 @@ export default class {
                 this.observerSrc.observe(el);
             }
         });
-        document.querySelectorAll(`[${this.attibuteNameBGImage}]`).forEach((el) => {
+        [...document.querySelectorAll(`[${this.attibuteNameBGImage}]`)].forEach((el) => {
             if (typeof (el.getAttribute('src')) !== 'string') {
                 if (el.getAttribute(this.attibuteNameBGImage)) {
                     el.style.backgroundColor = el.getAttribute(this.attibuteNameColor);
@@ -106,3 +101,4 @@ export default class {
     }
 }
 
+let toto = new Toto();
